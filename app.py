@@ -22,9 +22,8 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-
 # ==========================================
-# INICIALIZAR BD (solo la primera vez)
+# INICIALIZAR BD (SE EJECUTA SIEMPRE)
 # ==========================================
 def init_db():
     with sqlite3.connect(DATABASE) as conn:
@@ -39,7 +38,7 @@ def init_db():
             )
         """)
 
-        # Crear admin por defecto si no existe
+        # Crear admin por defecto
         cursor.execute("SELECT * FROM usuarios WHERE usuario = 'admin'")
         if not cursor.fetchone():
             cursor.execute(
@@ -64,6 +63,8 @@ def init_db():
 
         conn.commit()
 
+# Ejecutar init_db SIEMPRE (PC + Render)
+init_db()
 
 # ==========================================
 # LOGIN
@@ -71,7 +72,6 @@ def init_db():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        # usar .get para evitar BadRequestKeyError si el campo viene ausente
         usuario = request.form.get("username") or request.form.get("usuario")
         clave = request.form.get("password") or request.form.get("clave")
 
@@ -92,15 +92,13 @@ def login():
 
     return render_template("login.html")
 
-
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
 
-
 # ==========================================
-# INDEX PÚBLICO (solo ver)
+# INDEX PÚBLICO
 # ==========================================
 @app.route("/")
 def index_publico():
@@ -109,7 +107,6 @@ def index_publico():
     cursor.execute("SELECT * FROM equipos ORDER BY id DESC")
     equipos = cursor.fetchall()
     return render_template("index_publico.html", equipos=equipos)
-
 
 # ==========================================
 # INDEX ADMIN
@@ -125,9 +122,8 @@ def index_admin():
     equipos = cursor.fetchall()
     return render_template("index_admin.html", equipos=equipos)
 
-
 # ==========================================
-# AGREGAR EQUIPO (SOLO ADMIN)
+# AGREGAR EQUIPO
 # ==========================================
 @app.route("/agregar", methods=["GET", "POST"])
 def agregar():
@@ -159,9 +155,8 @@ def agregar():
 
     return render_template("agregar.html")
 
-
 # ==========================================
-# EDITAR EQUIPO (SOLO ADMIN)
+# EDITAR EQUIPO
 # ==========================================
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
 def editar(id):
@@ -198,9 +193,8 @@ def editar(id):
 
     return render_template("editar.html", equipo=equipo)
 
-
 # ==========================================
-# ELIMINAR EQUIPO (SOLO ADMIN)
+# ELIMINAR EQUIPO
 # ==========================================
 @app.route("/eliminar/<int:id>")
 def eliminar(id):
@@ -214,9 +208,8 @@ def eliminar(id):
 
     return redirect("/admin")
 
-
 # ==========================================
-# BUSCAR (PÚBLICO Y ADMIN)
+# BUSCAR (ADMIN Y PÚBLICO)
 # ==========================================
 @app.route("/buscar", methods=["GET"])
 def buscar():
@@ -233,14 +226,14 @@ def buscar():
     """, (valor, valor, valor, valor, valor, valor, valor, valor))
 
     equipos = cursor.fetchall()
+
     if session.get("admin"):
         return render_template("index_admin.html", equipos=equipos)
     else:
         return render_template("index_publico.html", equipos=equipos)
 
-
 # ==========================================
-# DESCARGAR DOCUMENTO
+# ARCHIVOS / DOCUMENTOS (si existen)
 # ==========================================
 @app.route('/descargar_documento/<int:id>')
 def descargar_documento(id):
@@ -248,8 +241,8 @@ def descargar_documento(id):
     cursor = conn.cursor()
     cursor.execute("PRAGMA table_info(equipos)")
     cols = [r[1] for r in cursor.fetchall()]
+
     if 'documento' not in cols:
-  
         return render_template('no_documento.html', id=id), 404
 
     cursor.execute("SELECT documento FROM equipos WHERE id=?", (id,))
@@ -259,15 +252,14 @@ def descargar_documento(id):
 
     filename = row[0]
     docs_dir = os.path.join(app.root_path, 'static', 'docs')
+
     if not os.path.exists(os.path.join(docs_dir, filename)):
         return render_template('no_documento.html', id=id), 404
 
     return send_from_directory(docs_dir, filename, as_attachment=True)
 
-
 # ==========================================
-# INICIO DE APP
+# INICIO DE APP (SOLO LOCAL)
 # ==========================================
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
