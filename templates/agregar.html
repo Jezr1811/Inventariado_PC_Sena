@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Equipo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <div class="container">
+    <h2 class="titulo">Agregar Equipo</h2>
+    <p>Registra aquí un nuevo equipo del inventario del SENA</p>
+
+    <form method="POST" class="formulario">
+        <label>Placa SENA:</label><br>
+        <input type="text" name="placa_sena" required><br><br>
+
+        <label>Marca:</label><br>
+        <input type="text" name="marca" required><br><br>
+
+        <label>Modelo:</label><br>
+        <input type="text" name="modelo" required><br><br>
+
+        <label>Serial:</label><br>
+        <input type="text" name="serial" required><br><br>
+
+        <label>Procesador:</label><br>
+        <input type="text" name="procesador"><br><br>
+
+        <label>RAM (GB):</label><br>
+        <input type="text" name="ram"><br><br>
+
+        <label>Almacenamiento:</label><br>
+        <input type="text" name="almacenamiento"><br><br>
+
+        <label>Estado:</label><br>
+        <select name="estado" required>
+            <option value="Operativo">Operativo</option>
+            <option value="En mantenimiento">En mantenimiento</option>
+            <option value="Dañado">Dañado</option>
+        </select><br><br>
+
+        <div class="acciones">
+            <button type="submit" class="btn pastel" style="width:100%;">Guardar</button>
+        </div>
+    </form>
+
+    <div style="margin-top:12px;">
+        <a href="{{ url_for('index_admin') }}" class="link crear">⬅ Volver al panel</a>
+    </div>
+    </div>
+</body>
+</html>

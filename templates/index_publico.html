@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario SENA - Vista Pública</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header">
+        <h2 class="titulo">Inventario SENA - Vista Pública</h2>
+        <a href="{{ url_for('login') }}" class="btn pastel-sec login-btn small">Iniciar sesión</a>
+    </div>
+
+    <h3>Equipos Registrados</h3>
+
+    <!-- Buscador -->
+    <form action="{{ url_for('buscar') }}" method="GET" class="search-form">
+        <input class="input-search" type="text" name="filtro" placeholder="Buscar por marca, serial, procesador...">
+        <button class="btn pastel" type="submit">Buscar</button>
+    </form>
+
+    <!-- Tabla de equipos -->
+    <div class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Placa SENA</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Serial</th>
+                <th>Procesador</th>
+                <th>RAM</th>
+                <th>Almacenamiento</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for equipo in equipos %}
+            <tr>
+                <td>{{ equipo[0] }}</td>
+                <td>{{ equipo[1] }}</td>
+                <td>{{ equipo[2] }}</td>
+                <td>{{ equipo[3] }}</td>
+                <td>{{ equipo[4] }}</td>
+                <td>{{ equipo[5] }}</td>
+                <td>{{ equipo[6] }}</td>
+                <td>{{ equipo[7] }}</td>
+                <td>{{ equipo[8] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    {% if equipos|length == 0 %}
+        <p class="no-results">No hay equipos registrados o la búsqueda no arrojó resultados.</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

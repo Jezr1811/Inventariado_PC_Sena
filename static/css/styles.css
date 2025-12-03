@@ -1,0 +1,258 @@
+:root {
+    /* Colores */
+    --bg-page: #e8f2ff;
+    --card-bg: #ffffff;
+    --card-ghost: #f4faff;
+    --primary: #2f68c4;
+    --primary-600: #6ea2ff;
+    --primary-500: #8ab5ff;
+    --primary-400: #9acbff;
+    --accent: #b7d4ff;
+    --danger: #ffb4b4;
+    --muted: #a9c7ff;
+    --input-bg: #f2f7ff;
+    --text-on-primary: #ffffff;
+    --text-default: #2a4f9e;
+
+    /* Espaciados */
+    --space-xs: 6px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 20px;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    --shadow-1: 0 2px 6px rgba(0,0,0,0.05);
+    --shadow-2: 0 4px 20px rgba(0,0,0,0.08);
+
+    --max-width: 1100px;
+}
+
+/* -------------------------
+   Reset y base
+------------------------- */
+* { box-sizing: border-box; }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-page);
+    color: var(--text-default);
+    -webkit-font-smoothing: antialiased;
+}
+
+.container,
+.login-container {
+    max-width: 760px;
+    width: 90%;
+    margin: 40px auto;
+    padding: 32px;
+    border-radius: 18px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow-2);
+}
+
+/* -------------------------
+   Títulos
+------------------------- */
+.titulo {
+    text-align: center;
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 25px;
+}
+
+/* -------------------------
+   Botones
+------------------------- */
+.btn {
+    display: inline-block;
+    padding: var(--space-md);
+    border: none;
+    font-size: 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: 0.18s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.pastel { background: var(--primary-500); color: #fff; }
+.pastel:hover { background: var(--primary-600); }
+
+.pastel-sec { background: var(--primary-400); color: #fff; }
+.pastel-sec:hover { background: #82bfff; }
+
+.editar-btn { background: var(--accent); color: var(--text-default); }
+.eliminar-btn { background: var(--danger); color: #fff; }
+
+/* -------------------------
+   Inputs y formularios
+------------------------- */
+.formulario input,
+.input-select,
+input[type="text"],
+input[type="search"],
+select,
+textarea {
+    width: 100%;
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--muted);
+    margin: 10px 0;
+    font-size: 16px;
+    background: var(--input-bg);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-600);
+    box-shadow: 0 0 6px rgba(110,162,255,0.25);
+}
+
+/* -------------------------
+   Tarjetas
+------------------------- */
+.tarjeta-persona {
+    background: var(--card-ghost);
+    border-left: 6px solid var(--primary-500);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+}
+
+/* -------------------------
+   Tablas
+------------------------- */
+.table-card {
+    overflow-x: auto;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Para que en teléfonos haya scroll y NO se dañe */
+}
+
+table th, table td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+thead th {
+    background: rgba(47,104,196,0.05);
+    font-weight: 700;
+}
+
+/* Hover */
+tbody tr:hover {
+    background: rgba(110,162,255,0.10);
+}
+
+/* -------------------------
+   Header
+------------------------- */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 22px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, rgba(47,104,196,0.12), rgba(138,181,255,0.09));
+    margin-bottom: 18px;
+}
+
+.page-header .titulo { margin: 0; }
+
+/* -------------------------
+   Buscador
+------------------------- */
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.search-form .input-search {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(47,104,196,0.2);
+}
+
+/* -------------------------
+   Responsividad real
+------------------------- */
+@media (max-width: 900px) {
+    table {
+        min-width: 500px;
+    }
+}
+
+@media (max-width: 720px) {
+
+    .container, .login-container {
+        margin: 20px auto;
+        padding: 22px;
+    }
+
+    .titulo {
+        font-size: 24px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 0;
+    }
+
+    .container, .login-container {
+        width: 92%;
+        padding: 18px;
+        margin: 16px auto;
+    }
+
+    .titulo {
+        font-size: 21px;
+    }
+
+    input, select, textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    table {
+        min-width: 420px;
+    }
+}

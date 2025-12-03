@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Equipo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div class="login-container pastel-card">
+    <h2 class="titulo">Editar Equipo</h2>
+
+    <form method="POST" class="formulario">
+
+        <input type="text" name="placa_sena" value="{{ equipo[1] }}" required>
+        <input type="text" name="marca" value="{{ equipo[2] }}" required>
+        <input type="text" name="modelo" value="{{ equipo[3] }}" required>
+        <input type="text" name="serial" value="{{ equipo[4] }}" required>
+        <input type="text" name="procesador" value="{{ equipo[5] }}">
+        <input type="text" name="ram" value="{{ equipo[6] }}">
+        <input type="text" name="almacenamiento" value="{{ equipo[7] }}">
+
+ 
+        <select name="estado" required class="input-select">
+            <option value="Operativo"      {% if equipo[8] == 'Operativo' %}selected{% endif %}>Operativo</option>
+            <option value="En mantenimiento" {% if equipo[8] == 'En mantenimiento' %}selected{% endif %}>En mantenimiento</option>
+            <option value="Dañado"         {% if equipo[8] == 'Dañado' %}selected{% endif %}>Dañado</option>
+        </select>
+
+        <button type="submit" class="btn pastel" style="width: 100%;">Guardar cambios</button>
+    </form>
+
+    <div style="margin-top:12px;">
+        <a href="{{ url_for('index_admin') }}" class="link crear">⬅ Volver al panel</a>
+    </div>
+    </div>
+</div>
+
+</body>
+</html>
